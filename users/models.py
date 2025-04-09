@@ -23,11 +23,14 @@ def validate_unique_nickname(nickname, instance=None):
         if Profile.objects.filter(nickname=nickname).exists():
             raise ValidationError(f"Nickname '{nickname}' is already taken.")
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=30)
     surname = models.CharField(max_length=30)
     nickname = models.CharField(max_length=30, unique=True, null=False, blank=False)
+    max_spend = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def clean(self):
         validate_unique_nickname(self.nickname, instance=self)
@@ -38,3 +41,6 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    
+  

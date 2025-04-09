@@ -21,7 +21,7 @@ def login_view(request):
         if user is not None:
             login(request, user)
             next_url = request.GET.get('next', reverse("users:user"))
-            return HttpResponseRedirect(next_url)
+            return HttpResponseRedirect(next_url) 
         else:
             messages.error(request, "Invalid Credentials.")
     return render(request, "users/login.html")
